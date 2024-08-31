@@ -1,0 +1,3 @@
+C:/Users/cannu/Desktop/MiniProject/build/CMakeFiles/miniproject.dir
+C:/Users/cannu/Desktop/MiniProject/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/cannu/Desktop/MiniProject/build/CMakeFiles/ZERO_CHECK.dir
