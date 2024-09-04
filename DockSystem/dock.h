@@ -9,18 +9,18 @@ public:
     /**
      * @brief 기본 생성자 및 매개변수화된 생성자
      *
-     * 기본값 또는 사용자 지정 값으로 Dock 객체를 초기화합니다.
-     * @param id 도크의 고유 ID (기본값: 0)
+     * 기본값 또는 사용자 지정 값으로 Dock 객체를 초기화
+     * @param dockId 도크의 고유 ID (기본값: 0)
      * @param vehicleNumber 차량 번호 (기본값: 빈 문자열)
-     * @param quantity 물품의 수량 (기본값: 0)
-     * @param itemType 물품의 종류 (기본값: 빈 문자열)
-     * @param status 도크의 상태 (기본값: 빈 문자열)
+     * @param itemQuantity 상품의 수량 (기본값: 0)
+     * @param itemType 상품의 종류 (기본값: 빈 문자열)
+     * @param dockStatus 도크의 상태 (기본값: 빈 문자열)
      * @param entryTime 입차 시간 (기본값: 현재 시간)
      * @param exitTime 출차 시간 (기본값: 현재 시간)
      */
-    Dock(int id = 0, const std::string& vehicleNumber = "", int quantity = 0,
-         const std::string& itemType = "", const std::string& status = "",
-         std::time_t entryTime = std::time(nullptr), std::time_t exitTime = std::time(nullptr));
+    Dock(int dockId, const std::string& vehicleNumber , int itemQuantity ,
+         const std::string& itemType , const std::string& dockStatus,
+         std::time_t entryTime , std::time_t exitTime );
 
     /**
      * @brief 차량 번호를 반환합니다.
@@ -37,30 +37,30 @@ public:
     void setVehicleNumber(const std::string& vehicleNumber);
 
     /**
-     * @brief 물품의 수량을 반환합니다.
+     * @brief 상품의 수량을 반환합니다.
      *
-     * @return 물품의 수량
+     * @return 상품의 수량
      */
-    int getQuantity() const;
+    int getItemQuantity() const;
 
     /**
-     * @brief 물품의 수량을 설정합니다.
+     * @brief 상품의 수량을 설정합니다.
      *
-     * @param quantity 새 물품 수량
+     * @param quantity 새 상품 수량
      */
-    void setQuantity(int quantity);
+    void setItemQuantity(int quantity);
 
     /**
-     * @brief 물품의 종류를 반환합니다.
+     * @brief 상품의 종류를 반환합니다.
      *
-     * @return 물품의 종류
+     * @return 상품의 종류
      */
     std::string getItemType() const;
 
     /**
-     * @brief 물품의 종류를 설정합니다.
+     * @brief 상품의 종류를 설정합니다.
      *
-     * @param itemType 새 물품 종류
+     * @param itemType 새 상품 종류
      */
     void setItemType(const std::string& itemType);
 
@@ -69,14 +69,14 @@ public:
      *
      * @return 도크의 상태
      */
-    std::string getStatus() const;
+    std::string getDockStatus() const;
 
     /**
      * @brief 도크의 상태를 설정합니다.
      *
      * @param status 새 도크 상태
      */
-    void setStatus(const std::string& status);
+    void setDockStatus(const std::string& status);
 
     /**
      * @brief 입차 시간을 반환합니다.
@@ -111,7 +111,7 @@ public:
      *
      * @return 도크의 ID
      */
-    int getId() const;
+    int getDockId() const;
 
     /**
      * @brief 두 Dock 객체의 동등성 비교 연산자
@@ -123,14 +123,13 @@ public:
     bool operator==(const Dock &other) const;
 
 private:
-    int m_id;                   ///< 도크의 고유 ID
+    int m_dockId;                    ///< 도크의 고유 ID
     std::string m_vehicleNumber; ///< 차량 번호
-    int m_quantity;             ///< 물품의 수량
-    std::string m_itemType;     ///< 물품의 종류
-    std::string m_status;       ///< 도크의 상태
-    std::time_t m_entryTime;    ///< 입차 시간
-    std::time_t m_exitTime;     ///< 출차 시간
-    // 1개당 가격
+    int m_itemQuantity;          ///< 상품의 수량
+    std::string m_itemType;      ///< 상품의 종류
+    std::string m_dockStatus;    ///< 도크의 상태
+    std::time_t m_entryTime;     ///< 입차 시간
+    std::time_t m_exitTime;      ///< 출차 시간
 };
 
 #endif // DOCK_H

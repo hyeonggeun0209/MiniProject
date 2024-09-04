@@ -20,35 +20,35 @@ public:
 
     // 새로운 도크를 도크 목록에 추가합니다.
     // @param dock 추가할 도크 객체의 고유 포인터
-    void addDock(std::unique_ptr<Dock> dock);
+    void addDockToList(std::unique_ptr<Dock> dock);
 
     // 주어진 ID의 도크를 도크 목록에서 제거합니다.
     // @param id 제거할 도크의 고유 ID
-    void removeDock(int id);
+    void removeDockFromList(int dockId);
 
     // 주어진 ID의 도크 정보를 수정합니다.
     // 도크의 현재 상태를 출력하고 새로운 정보를 입력받아 업데이트합니다.
     // @param id 수정할 도크의 고유 ID
-    void modifyDock(int id);
+    void modifyDock(int dockId);
 
     // 주어진 ID의 도크를 검색하여 반환합니다.
     // @param id 검색할 도크의 고유 ID
     // @return 주어진 ID의 도크 객체 포인터. ID가 존재하지 않으면 nullptr
-    Dock* searchDock(int id) const;
+    Dock* searchDock(int dockId) const;
 
     // 모든 도크의 정보를 출력합니다.
-    void displayDocks() const;
+    void displayDockList() const;
 
     // 도크를 입고 처리합니다. 도크의 상태를 '입고'로 변경하고 필요한 정보를 업데이트합니다.
     // @param id 입고 처리할 도크의 고유 ID
     // @param vehicleNumber 입고되는 차량 번호
     // @param quantity 입고되는 물품의 수량
     // @param itemType 물품의 종류
-    void checkIn(int id, const std::string& vehicleNumber, int quantity, const std::string& itemType);
+    void checkIn(int dockId, const std::string& vehicleNumber, int itemQuantity, const std::string& itemType);
 
     // 도크를 출고 처리합니다. 도크의 상태를 '출고'로 변경하고 출차 시간을 업데이트합니다.
     // @param id 출고 처리할 도크의 고유 ID
-    void checkOut(int id);
+    void checkOut(int dockId);
 
     // CSV 형식의 데이터를 파싱하여 벡터로 반환합니다.
     // @param input 입력 스트림

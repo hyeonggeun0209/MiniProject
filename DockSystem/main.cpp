@@ -1,103 +1,35 @@
-#include "DockManager.h"
+#include "dockmanager.h"
 #include <iostream>
-#include <chrono>
-#include <string>
+#include <iomanip>
+#include <ctime>
 
-void showMenu() {
-    std::cout << "1. Add Dock\n";
-    std::cout << "2. Remove Dock\n";
-    std::cout << "3. Display All Docks\n";
-    std::cout << "4. Display Single Dock\n";
-    std::cout << "5. Add Item to Dock\n";
-    std::cout << "6. Remove Item from Dock\n";
-    std::cout << "7. Exit\n";
-    std::cout << "Choose an option: ";
+// 현재 시간을 "YYYY-MM-DD HH:MM:SS" 형식으로 출력하는 함수
+void displayCurrentTime() {
+    // 현재 시간을 time_t 형식으로 가져옵니다.
+    std::time_t now = std::time(nullptr);
+
+    std::tm nowTm;
+    localtime_s(&nowTm,&now);
+
+    // 현재 시간을 로컬 시간으로 변환하고 지정된 형식으로 출력합니다.
+    std::cout << std::put_time(&nowTm, "%Y-%m-%d %H:%M:%S") << std::endl;
 }
 
 int main() {
+    // DockManager 객체를 생성합니다.
+    // 이 객체는 도크의 추가, 삭제, 수정, 검색, 입고, 출고 등을 관리합니다.
     DockManager manager;
-    int choice, dockID;
-    std::string vehicleNumber, itemType;
-    int quantity;
-    std::string status;
 
-    while (true) {
-        showMenu();
-        std::cin >> choice;
+    // 프로그램이 계속 실행될 수 있도록 하는 변수를 설정합니다.
+    bool continueRunning = true;
 
-        switch (choice) {
-            case 1:
-                std::cout << "Enter Dock ID to add: ";
-                std::cin >> dockID;
-                manager.addDock(dockID);
-                std::cout << "Dock " << dockID << " added.\n";
-                break;
-
-            case 2:
-                std::cout << "Enter Dock ID to remove: ";
-                std::cin >> dockID;
-                manager.removeDock(dockID);
-                std::cout << "Dock " << dockID << " removed.\n";
-                break;
-
-            case 3:
-                manager.displayAllDocks();
-                break;
-
-            case 4:
-                std::cout << "Enter Dock ID to display: ";
-                std::cin >> dockID;
-                manager.displayDock(dockID);
-                break;
-
-            case 5: {
-                std::cout << "Enter Dock ID: ";
-                std::cin >> dockID;
-                Dock* dock = manager.getDock(dockID);
-                if (dock) {
-                    std::cout << "Enter Vehicle Number: ";
-                    std::cin >> vehicleNumber;
-                    dock->setVehicleNumber(vehicleNumber);
-                    dock->setEntryTime(std::chrono::system_clock::now());
-
-                    std::cout << "Enter Item Type: ";
-                    std::cin >> itemType;
-                    std::cout << "Enter Quantity: ";
-                    std::cin >> quantity;
-                    std::cout << "Enter Status (e.g., '입고', '선적'): ";
-                    std::cin >> status;
-
-                    Item item = {itemType, quantity, status};
-                    dock->addItem(item);
-                    std::cout << "Item added to Dock " << dockID << ".\n";
-                } else {
-                    std::cout << "Dock ID " << dockID << " not found.\n";
-                }
-                break;
-            }
-
-            case 6: {
-                std::cout << "Enter Dock ID: ";
-                std::cin >> dockID;
-                Dock* dock = manager.getDock(dockID);
-                if (dock) {
-                    std::cout << "Enter Item Type to remove: ";
-                    std::cin >> itemType;
-                    dock->removeItem(itemType);
-                    std::cout << "Item removed from Dock " << dockID << ".\n";
-                } else {
-                    std::cout << "Dock ID " << dockID << " not found.\n";
-                }
-                break;
-            }
-
-            case 7:
-                return 0;
-
-            default:
-                std::cout << "Invalid choice, please try again.\n";
-        }
+    // 사용자가 프로그램을 종료할 때까지 메뉴를 반복하여 표시하고 입력을 처리합니다.
+    while (continueRunning) {
+        // 메뉴를 표시하고 사용자의 선택에 따라 적절한 작업을 수행합니다.
+        // 사용자가 프로그램 종료를 선택하면 continueRunning이 false로 설정됩니다.
+        continueRunning = manager.displayMenu();
     }
 
+    // 프로그램이 종료될 때 0을 반환하여 성공적으로 종료됨을 알립니다.
     return 0;
 }
