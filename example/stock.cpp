@@ -4,23 +4,30 @@
 
 using namespace std;
 
-Stock::Stock(int id, int p_id, int quantity, string section)
-          : s_id(id), p_id(this->p_id), s_quantity(quantity), s_section(section)
+Stock::Stock(int id, int quantity, string section)
+          : s_id(id), s_quantity(quantity), s_section(section)
 {
 }
 
-int Stock::getP_id() const {
+void Stock::setP_id(int id) {
+    p_id.push_back(id);
+}
+
+vector<int> Stock::getP_id() {
     return p_id;
 }
 
+void Stock::incrementQuantity() {
+    s_quantity++;
+}
 int Stock::getQuantity() const
 {
     return s_quantity;
 }
 
-void Stock::setQuantity(string& name)
+void Stock::setQuantity(int quantity)
 {
-    s_quantity = atoi(name.c_str());
+    s_quantity = quantity;
 }
 
 string Stock::getSection() const

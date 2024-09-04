@@ -2,16 +2,19 @@
 #define __STOCK_H__
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 class Stock {
 public:
-    Stock(int id = 0, int p_id = 0, int quantity = 0, string = "");
-
-    int getP_id() const;
+    Stock(int id = 0, int quantity = 0, string = "");
+    
+    void setP_id(int id);
+    vector<int> getP_id();
+    void incrementQuantity();
     int  getQuantity() const;
-    void setQuantity(string&);
+    void setQuantity(int);
     string getSection() const;
     void setSection(string&);
     int id() const;
@@ -19,7 +22,7 @@ public:
 
 private:
     int s_id;
-    int p_id;
+    vector<int> p_id;
     int s_quantity;
     string s_section;
 };

@@ -1,15 +1,13 @@
 #include <iostream>
-#include "warehouse.h"
+#include "center.h"
+#include "stockmanager.h"
+#include "productmanager.h"
 
 int main()
 {
-//    ProductManager pm;
-//    Shoplist sl;
-    WareHouse w;
-    bool a = true;
-    while(a) {
-        // a = cm.displayMenu();
-        a = w.displayMenu();
-    }
+    ProductManager pm;
+    StockManager sm;
+    Center center(pm, sm);
+    center.run();
     return 0;
 }

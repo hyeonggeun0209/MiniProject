@@ -38,12 +38,12 @@ ProductManager::~ProductManager()
    file.close( );
 }
 
-void ProductManager::inputProduct( )
+void ProductManager::inputProduct()
 {
     string name, price;
     cout << "name : "; cin >> name;
     cout << "price : "; cin.ignore(); getline(cin, price, '\n'); //cin >> address;
-
+    
     int id = makeId( );
     Product* c = new Product(id, name, price);
     productList.insert( { id, c } );
@@ -80,10 +80,10 @@ void ProductManager::displayInfo()
 {
     cout << endl << "  ID  |     Name     |     Price " << endl;
     for (const auto& v : productList) {
-         Product* c = v.second;
-         cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
-         cout << setw(12) << setfill(' ') << c->getName() << " | ";
-         cout << setw(12) << c->getPrice() << endl;
+        Product* c = v.second;
+        cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
+        cout << setw(12) << setfill(' ')  << c->getName() << " | ";
+        cout << setw(12) << c->getPrice() << endl;
     }
 }
 
@@ -126,45 +126,6 @@ vector<string> ProductManager::parseCSV(istream &file, char delimiter)
     return row;
 }
 
-
-bool ProductManager::displayMenu()
-{
-    int ch, key;
-    cout << "\033[2J\033[1;1H";
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "                 Product Manager                 " << endl;
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "  1. Display Product List                     " << endl;
-    cout << "  2. input Product                            " << endl;
-    cout << "  3. Delete Product                           " << endl;
-    cout << "  4. Modify Product                           " << endl;
-    cout << "  5. Quit Product Manager                       " << endl;
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << " What do you wanna do? ";
-    cin >> ch;
-    switch(ch) {
-        case 1: default:
-            displayInfo();
-            cin.ignore();
-            getchar();
-            break;
-        case 2:
-            inputProduct();
-            break;
-        case 3:
-            displayInfo();
-            cout << "   Choose Key : ";
-            cin >> key;
-            deleteProduct(key);
-            break;
-        case 4:
-            displayInfo();
-            cout << "   Choose Key : ";
-            cin >> key;
-            modifyProduct(key);
-            break;
-        case 5:
-            return false;
-    }
-    return true;
+int ProductManager::getsize() {
+    return productList.size();
 }
