@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <stdlib.h>
+#include <time.h>
 
 #include "product.h"
 #include "productmanager.h"
@@ -10,7 +12,7 @@
 ProductManager::ProductManager()
 {
    ifstream file;
-   file.open("productlist.txt");
+   file.open("productlist.csv");
    if(!file.fail()) {
        while(!file.eof()) {
            vector<string> row = parseCSV(file, ',');
@@ -27,7 +29,7 @@ ProductManager::ProductManager()
 ProductManager::~ProductManager()
 {
    ofstream file;
-   file.open("productlist.txt");
+   file.open("productlist.csv");
    if(!file.fail()) {
       for (const auto& v : productList) {
           Product* c = v.second;
@@ -38,15 +40,22 @@ ProductManager::~ProductManager()
    file.close( );
 }
 
-void ProductManager::inputProduct()
-{
-    string name, price;
-    cout << "name : "; cin >> name;
-    cout << "price : "; cin.ignore(); getline(cin, price, '\n'); //cin >> address;
-    
+void ProductManager::inputProduct(const string& name="", const string& price="")
+{   
     int id = makeId( );
     Product* c = new Product(id, name, price);
     productList.insert( { id, c } );
+}
+
+void ProductManager::receiveProduct(DockManager& dm) {
+    int price;
+    srand(time(NULL));
+    for(int i = 0; i < dm.getDockSize(); i++) {
+        for(int j = 0; j < dm.searchDock(i)->getItemQuantity(); j++) {
+            price = (rand() % 10001) + 1000;
+            inputProduct(dm.searchDock(i)->getItemType(), to_string(price));
+        }
+    }
 }
 
 Product* ProductManager::search(int id)

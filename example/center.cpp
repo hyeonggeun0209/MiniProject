@@ -6,8 +6,8 @@
 #include "center.h"
 using namespace std;
 
-Center::Center(ProductManager& pm, StockManager& sm)
-    : pm(pm), sm(sm) {}
+Center::Center(DockManager& dm, ProductManager& pm, StockManager& sm)
+    : dm(dm), pm(pm), sm(sm) {}
 
 void Center::run() {
     int num;
@@ -16,7 +16,7 @@ void Center::run() {
         cin >> num;
         switch (num) {
             case 1:
-                DockerManagement();
+                DockManagement();
                 break;
             case 2:
                 StockManagement();
@@ -35,7 +35,7 @@ void Center::displayMainMenu() {
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
     cout << "                 Center                 " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "  1. Docker Manager                     " << endl;
+    cout << "  1. Dock Manager                     " << endl;
     cout << "  2. Stock Manager                     " << endl;
     cout << "  3. Product Manager                            " << endl;
     cout << "  4. Quit this Program                       " << endl;
@@ -43,14 +43,17 @@ void Center::displayMainMenu() {
     cout << " What do you wanna do? ";
 }
 
-void Center::displayDockerMenu() {
-    cout << "\033[2J\033[1;1H";
+void Center::displayDockMenu() {
+    cout << "\033[2J\033[1;1H"; // 화면을 지우고 커서를 맨 위로 이동합니다.
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "                 Center                 " << endl;
+    cout << "              Dock Manager                   " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "  1. Product Manager                     " << endl;
-    cout << "  2. Stock Manager                            " << endl;
-    cout << "  3. Quit this Program                       " << endl;
+    cout << "  1. Display Dock List                       " << endl;
+    cout << "  2. Dock Check In                           " << endl;
+    cout << "  3. Dock Check Out                          " << endl;
+    cout << "  4. Modify DockList                         " << endl;
+    cout << "  5. Remove Dock From DockList               " << endl;
+    cout << "  6. Quit this Program                       " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
     cout << " What do you wanna do? ";
 }
@@ -76,7 +79,7 @@ void Center::displayProductMenu() {
     cout << "                 Product Manager                 " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
     cout << "  1. Display Product List                     " << endl;
-    cout << "  2. input Product                            " << endl;
+    cout << "  2. Receive Product                            " << endl;
     cout << "  3. Delete Product                           " << endl;
     cout << "  4. Modify Product                           " << endl;
     cout << "  5. Quit Product Manager                       " << endl;
@@ -84,8 +87,62 @@ void Center::displayProductMenu() {
     cout << " What do you wanna do? ";
 }
 
-void Center::DockerManagement() {
-
+void Center::DockManagement() {
+    int choice, dockId, itemQuantity;
+    string vehicleNumber, itemType;
+    while(true) {
+        displayDockMenu();
+        cin >> choice;
+        switch (choice) {
+        case 1:
+            dm.displayDockList(); // 도크 목록을 출력합니다.
+            cin.ignore();
+            cout<<"If you go back, pleas press Enter!"<<endl;
+            getchar(); // 사용자가 엔터를 누를 때까지 기다립니다.
+            break;
+        case 2:
+            cout << "Enter Dock ID to check in: "; cin >> dockId;
+            cout << "Enter Vehicle Number: "; cin >> vehicleNumber;
+            cout << "Enter Item Quantity: "; cin >> itemQuantity;
+            cout << "Enter Item Type: "; cin >> itemType;
+            dm.checkIn(dockId, vehicleNumber, itemQuantity, itemType); // 입고 처리
+            break;
+        case 3:
+            dm.displayDockList(); // 도크 목록을 출력합니다.
+            cin.ignore();
+            cout << "\nEnter Dock ID to check out : "; cin >> dockId;
+            dm.checkOut(dockId); // 출고 처리
+            cout<<"If you go back, pleas press Enter!"<<endl;
+            cin.ignore();
+            getchar(); // 사용자가 엔터를 누를 때까지 기다립니다.
+            break;
+        case 4:
+            dm.displayDockList(); // 도크 목록을 출력합니다.
+            cin.ignore();
+            cout << "Enter Dock ID to modify: "; cin >> dockId;
+            dm.modifyDock(dockId); // 도크 수정
+            cout<<"If you go back, pleas press Enter!"<<endl;
+            cin.ignore();
+            getchar(); // 사용자가 엔터를 누를 때까지 기다립니다.
+            break;
+        case 5:
+            dm.displayDockList(); // 도크 목록을 출력합니다.
+            cin.ignore();
+            cout << "Enter Dock ID to remove: "; cin >> dockId;
+            dm.removeDockFromList(dockId); // 도크 삭제
+            cout<<"If you go back, pleas press Enter!"<<endl;
+            cin.ignore();
+            getchar(); // 사용자가 엔터를 누를 때까지 기다립니다.
+            break;
+        case 6:
+            return; // 프로그램 종료
+        default:
+            cout << "\nInvalid option. Please try again." << endl;
+            cout<<"If you go back, pleas press Enter!"<<endl;
+            cin.ignore();
+            getchar(); // 사용자가 엔터를 누를 때까지 기다립니다.
+        }
+    }
 }
 
 void Center::StockManagement() {
@@ -136,7 +193,8 @@ void Center::ProductManagement() {
                 getchar();
                 break;
             case 2:
-                pm.inputProduct();
+                pm.receiveProduct(dm);
+                pauseScreen();
                 break;
             case 3:
                 pm.displayInfo();

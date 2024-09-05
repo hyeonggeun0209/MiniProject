@@ -16,15 +16,16 @@ class StockManager {
         ~StockManager();
         void storeProduct(ProductManager& pm);
         void incrementStockQuantity(int id, const string& name);
-        void updateStock(const string& productType, int quantity);
+        // void updateStock(const string& productType, int quantity);
         void inputStock( );
-        void addStock(const string&);
+        // void addStock(const string&);
         void deleteStock(int);
         void modifyStock(int);
         Stock* search(int);
         int makeId();
         void displayInfo();
         vector<string> parseCSV(istream&, char);
+        void showStock();
 };
 
 #endif    // __STOCK_MANAGER_H__

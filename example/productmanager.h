@@ -4,7 +4,8 @@
 #include <map>
 #include <vector>
 #include "product.h"
-#include "stockmanager.h"
+#include "dockmanager.h"
+class DockManager;
 using namespace std;
 
 class ProductManager {
@@ -12,9 +13,9 @@ class ProductManager {
         ProductManager();
         ~ProductManager();
 
-        void inputProduct();
+        void inputProduct(const string& name, const string& price);
         void addProduct(Product*);
-
+        void receiveProduct(DockManager& dm);
         void deleteProduct(int);
         void modifyProduct(int);
         Product* search(int);

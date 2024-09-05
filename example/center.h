@@ -3,24 +3,25 @@
 
 #include "productmanager.h"
 #include "stockmanager.h"
-
+#include "dockmanager.h"
 using namespace std;
 
 class Center {
   public:
-      Center(ProductManager& pm, StockManager& sm);
+      Center(DockManager& dm, ProductManager& pm, StockManager& sm);
       void pauseScreen();
       void displayMainMenu();
-      void displayDockerMenu();
+      void displayDockMenu();
       void displayStockMenu();
       void displayProductMenu();
-      void DockerManagement();
+      void DockManagement();
       void StockManagement();
       void ProductManagement();
       void run();
   private:
       ProductManager& pm;
       StockManager& sm;
+      DockManager& dm;
 };
 
 #endif    // __CENTER_H__

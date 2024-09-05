@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Stock::Stock(int id, int quantity, string section)
+Stock::Stock(int id, string section,  int quantity)
           : s_id(id), s_quantity(quantity), s_section(section)
 {
 }
